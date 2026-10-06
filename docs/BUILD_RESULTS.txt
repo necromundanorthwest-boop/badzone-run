@@ -1,0 +1,5 @@
+
+> badzone-run@0.1.0 build
+> node scripts/check-build.mjs
+
+PASS: standalone entry, JavaScript syntax, local CSS/font assets and release metadata. public/ is ready for static hosting.

@@ -1,0 +1,29 @@
+
+> badzone-run@0.1.0 test
+> node --test tests/*.test.mjs
+
+✔ shot action damages a legal target, no post-finish firing option (13.941741ms)
+✔ previews stop at terrain and do not test slicks beyond impact (0.478142ms)
+AI-played races: 66/100 finished, others wrecked/DNF; all terminated.
+✔ seeded RNG, generator, daily initial conditions and three-section bounds (16.19177ms)
+✔ compulsory movement, acceleration/braking bounds, facing, immutability and illegal actions (2.449987ms)
+✔ handling explains modifiers and failure outcomes replay exactly (9.877324ms)
+✔ barrier, drop and open edge have distinct consequences (0.660705ms)
+✔ terrain impact, ram geometry, push, damage and wreck removal (0.643666ms)
+✔ shooting has arc, range and cover; mines, fire, debris, turrets and gloom resolve (0.936138ms)
+✔ section changes happen after a round, retain leaders, end after third section (3.194334ms)
+✔ AI uses legal actions, finishes races, occupancy stays unique, replays deterministic (1012.193727ms)
+✔ save/reload replays exact authoritative state (19.714938ms)
+✔ malformed, unsupported, invalid action and blocked storage recover safely (1.238949ms)
+✔ upgrades charge once, enforce cost, normalize corrupted data; rewards are idempotent (38.97484ms)
+✔ standalone game mounts directly and has no NecroNW shell dependencies (9.324049ms)
+✔ board remains functional as standalone with labels and preview (4.199824ms)
+✔ Render config selects static assets and regression-gated deployment (2.90463ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1178.782037
