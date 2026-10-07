@@ -1,3 +1,9 @@
+# Stage 2 Versus review branch
+
+This branch contains a **local mock**, not online multiplayer. Open [the portable review](docs/BADZONE_VERSUS_REVIEW.html) in a browser, or run `npm start`. See [the audit](docs/VERSUS_RECREATION_AUDIT.md) and [the UI gate](docs/VERSUS_UI_GATE.md). Browser visual validation is pending. Solo remains available at `?mode=solo`. Production deployment configuration is unchanged; do not deploy this mock as the contest release.
+
+---
+
 # Badzone Run
 
 **Race. Wreck. Upgrade. Repeat.** A standalone, turn-based browser racing game by Necromunda Northwest. Choose one of four chassis, race three AI rivals across three seeded sections, survive hazards, shoot, ram and improve your next run in the garage. Includes standardized UTC Daily Runs and local saves. No account is required.

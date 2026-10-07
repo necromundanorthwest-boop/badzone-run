@@ -1,0 +1,17 @@
+/* Stage 2 additions only. Existing palette, grid, cards, board and typography remain authoritative. */
+.bz-versus .bz-versus-title{display:block;font:700 clamp(18px,3vw,28px)/1.3 monospace;letter-spacing:5px;color:var(--paper);margin-top:12px}
+.bz-room-actions,.bz-review-actions{display:flex;flex-wrap:wrap;gap:10px}
+.bz-room-actions small{flex-basis:100%}
+.bz-solo-link{display:inline-block;margin-top:18px;min-height:44px;padding:10px 0;color:var(--muted);font:700 12px/24px monospace}
+.bz-code-row{display:flex;gap:8px;align-items:center}
+.bz-code-row input{font:700 20px monospace!important;letter-spacing:2px}
+.bz-code-row button{flex-shrink:0}
+.bz-turn{font-weight:bold;margin-top:0!important}
+.bz-opponent{font-size:12px;margin:0 0 18px!important;color:var(--muted)}
+.bz-versus .bz-controls>.bz-kicker{margin-bottom:8px}
+.bz-versus .bz-active-racer{outline:2px solid var(--gold);outline-offset:-2px}
+.bz-versus .bz-order b{overflow-wrap:anywhere}
+.bz-review-actions{margin-top:12px}
+.bz-review>p{color:var(--muted);font-size:12px}
+.bz-sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:600px){.bz-versus .bz-race-title h1{font-size:25px}.bz-code-row{flex-wrap:wrap}.bz-code-row button{width:100%}.bz-room-actions button{font-size:14px}.bz-versus .bz-top>span{min-width:0}.bz-versus .bz-panel .bz-upgrades>div{flex-wrap:wrap}}

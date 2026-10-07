@@ -1,8 +1,13 @@
 // One standalone entry point. Hash fragments never prevent the game from loading.
 const root=document.getElementById('game');
 try {
-  const {mountBadzone}=await import('./badzone/ui.js');
-  mountBadzone(root);
+  if(new URLSearchParams(location.search).get('mode')==='solo'){
+    const {mountBadzone}=await import('./badzone/ui.js');
+    mountBadzone(root);
+  }else{
+    const {mountVersus}=await import('./badzone/versus-ui.js');
+    mountVersus(root);
+  }
 } catch (error) {
   console.error('Badzone Run failed to start', error);
   root.replaceChildren();
