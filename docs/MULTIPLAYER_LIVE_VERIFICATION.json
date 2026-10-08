@@ -1,0 +1,17 @@
+{
+  "base": "https://badzone-run.onrender.com",
+  "browser": "134.0.6998.35",
+  "twoIndependentContexts": true,
+  "confirmedAction": true,
+  "reloadReconnect": true,
+  "offlineReconnect": true,
+  "fullRace": true,
+  "rematch": true,
+  "widths": [
+    320,
+    390,
+    768,
+    1280
+  ],
+  "errors": []
+}

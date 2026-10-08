@@ -1,40 +1,22 @@
-# Deployment status
+# Deployment status — 8 October 2026
 
-**Deployment source prepared. Check Render for live status.** Rules version 0.1.0; standalone distribution revision 1.
+Public URL: https://badzone-run.onrender.com
 
-## Completed
+Real multiplayer baseline `3981c07b457d1baf8c2a6908efcb067b79d412ce` is deployed and verified through two independent browser contexts. API deploy `dep-db3sj9cs728c7382stcg` and frontend deploy `dep-db3sk6tg1s2s73bmg8r0` reported live. Both clients shared the same race, survived refresh/offline recovery, completed a match, and mutually rematched.
 
-- Extracted only Badzone Run from the full NecroNW site package.
-- Direct root entry, standalone document metadata, local display font and favicon.
-- Garage home control now returns to the game garage rather than relying on the NecroNW hash router.
-- Original engine and persistence code unchanged; CSS remains scoped to the game.
-- Added Render Static Site configuration, build checks and local-server instructions.
-- Prepared submission description and public-play instructions.
-- Automated engine, persistence, combat and standalone-entry regression checks: PASS (16 tests).
-- Static build/assets/syntax validation: PASS.
-- 100 simulated races terminate; 600 generated sections pass route validation.
+## Services
 
-## Deployment source and account
+- Existing frontend `srv-db28bn4s728c73bgbdu0`: Render Static Site, branch main, `public`.
+- Authority `srv-db3sj94s728c7382ss7g`: free single Node instance, branch multiplayer-live, `node server/index.mjs`, host 0.0.0.0, Render PORT.
+- Health: https://badzone-run-api.onrender.com/api/health.
+- Workspace: user-authorized My Workspace. No unrelated service changed.
 
-Repository: https://github.com/necromundanorthwest-boop/badzone-run
+## Visual release
 
-The user authorized deployment to the connected Render account's My Workspace. The standalone source is prepared for that repository; no other Render service is modified. Live deployment status and the actual public URL must be read from the Render service dashboard rather than inferred from this preparation document.
+The full visual candidate passes 28 automated tests and the build gate. Five screens at 320/390/768/1280 widths were tested with keyboard confirmation and reduced motion. See `docs/VERSUS_RELEASE_REVIEW.md` and screenshot evidence. Final visual deployment status is recorded in the completion message and Render history.
 
-Render CLI was not installed. The optional Blueprint was parsed locally and checked against official Render documentation, but not validated by Render CLI/API. Direct Static Site creation uses equivalent build and publish settings.
+## Operational limits
 
-The included display font is losslessly packaged as WOFF; the unused body font is omitted. The same display font and original license are retained.
+Free-service initial wake-up can take a minute. Rooms are memory-resident and reset when the API restarts/redeploys; refresh and network reconnect preserve the same tab's seat while the room exists. Solo saves remain local. The frontend-only visual deployment does not redeploy the authority.
 
-## Remaining verification
-
-- Push the prepared source, create one Static Site and wait for a successful deploy.
-- Verify the actual HTTPS root URL, local asset loading and release.json.
-- Complete a fresh-browser game, purchase/refresh/Daily test, keyboard test and mobile checks at 320/390/768/1280 px.
-- Inspect browser console for errors, check direct root refresh, and record the real human session duration.
-- Use the actual deployed URL for the contest. Eligibility, submission form and any contest-specific requirements are not verified.
-
-The supplied desktop screenshot confirms the earlier integrated build was running and displaying round 4 on the user's computer. It is not evidence of a completed race or a deployed standalone build. The supported browser-control capability remains unavailable in this environment; no new browser QA results are claimed.
-
-## Official references consulted
-
-- https://render.com/docs/static-sites
-- https://render.com/docs/blueprint-spec
+This is a usable shared multiplayer release. Contest-specific eligibility and submission form requirements have not been audited; no contest submission has been sent.

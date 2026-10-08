@@ -1,1 +1,1 @@
-{"game":"Badzone Run","rulesVersion":"0.1.0","saveVersion":1,"distribution":"standalone-render","distributionVersion":"1","status":"deployment-candidate"}
+{"game": "Badzone Run", "rulesVersion": "0.1.0", "saveVersion": 1, "distribution": "standalone-render", "distributionVersion": "2", "status": "live-multiplayer", "multiplayerProtocol": 1}

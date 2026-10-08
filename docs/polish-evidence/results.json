@@ -1,0 +1,47 @@
+{
+  "browser": "134.0.6998.35",
+  "checks": [
+    {
+      "width": 320,
+      "landing": true,
+      "lobby": true,
+      "race": true,
+      "action": true,
+      "result": true,
+      "keyboard": true,
+      "reducedMotion": true
+    },
+    {
+      "width": 390,
+      "landing": true,
+      "lobby": true,
+      "race": true,
+      "action": true,
+      "result": true,
+      "keyboard": true,
+      "reducedMotion": true
+    },
+    {
+      "width": 768,
+      "landing": true,
+      "lobby": true,
+      "race": true,
+      "action": true,
+      "result": true,
+      "keyboard": true,
+      "reducedMotion": true
+    },
+    {
+      "width": 1280,
+      "landing": true,
+      "lobby": true,
+      "race": true,
+      "action": true,
+      "result": true,
+      "keyboard": true,
+      "reducedMotion": true
+    }
+  ],
+  "errors": [],
+  "note": "Screenshots use controlled server fixtures for art QA. Live multiplayer separately verified."
+}

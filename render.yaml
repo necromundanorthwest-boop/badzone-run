@@ -21,6 +21,7 @@ services:
         value: no-cache
   - type: web
     name: badzone-run-api
+    branch: multiplayer-live
     runtime: node
     plan: free
     buildCommand: npm test && npm run build

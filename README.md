@@ -1,67 +1,42 @@
-# Stage 2 Versus review branch
+# Badzone Run: Versus
 
-This branch contains a **local mock**, not online multiplayer. Open [the portable review](docs/BADZONE_VERSUS_REVIEW.html) in a browser, or run `npm start`. See [the audit](docs/VERSUS_RECREATION_AUDIT.md) and [the UI gate](docs/VERSUS_UI_GATE.md). Browser visual validation is pending. Solo remains available at `?mode=solo`. Production deployment configuration is unchanged; do not deploy this mock as the contest release.
+[Play Badzone Run](https://badzone-run.onrender.com)
 
----
+Two human drivers, two AI rivals, three hazardous sections. Choose a stock chassis, create a room, share the six-character code, and both mark ready. Preview speed, steering, shooting or ramming; the server resolves each maneuver and its dice. Both drivers can request a rematch. No account required. Solo remains at `?mode=solo`.
 
-# Badzone Run
+## Run locally
 
-**Race. Wreck. Upgrade. Repeat.** A standalone, turn-based browser racing game by Necromunda Northwest. Choose one of four chassis, race three AI rivals across three seeded sections, survive hazards, shoot, ram and improve your next run in the garage. Includes standardized UTC Daily Runs and local saves. No account is required.
-
-## Render deployment
-
-This project is a **Static Site**. There is no production Node server, Docker container, database or persistent disk. Once deployed, judges open the Render URL and play directly; no Terminal or downloads are required.
-
-Push the contents of this folder to the root of a GitHub repository. `package.json`, `render.yaml`, `public/`, `scripts/` and `tests/` must be at repository root, not wrapped inside another Badzone_Run_Render folder.
-
-Choose **New → Static Site** in Render and connect the repository:
-
-| Setting | Value |
-|---|---|
-| Name | badzone-run |
-| Branch | main |
-| Root Directory | Leave blank |
-| Build Command | `npm test && npm run build` |
-| Publish Directory | `public` |
-| Environment variable | `SKIP_INSTALL_DEPS=true` |
-
-`.node-version` selects Node 22 for build/test tooling. The app has no npm dependencies. No Start Command is used for a Static Site.
-
-The optional `render.yaml` defines the same static deployment for a Blueprint workflow and adds response headers. Use either direct Static Site creation or the Blueprint, not both. If the name is unavailable, choose `badzone-run-nw`; use the actual URL Render returns, not an assumed URL.
-
-## Local preview
-
-Node 22 or later is required only for local preview/build/tests.
-
-On macOS, extract this ZIP into Downloads. In Terminal:
+Node 22 or later; no npm dependencies.
 
 ```sh
-cd "$HOME/Downloads/Badzone_Run_Render"
-npm start
+npm run start:multiplayer
 ```
 
-Open http://localhost:4173/ . If the old NecroNW preview is still running, press Control+C in its Terminal first. Leave the new Terminal running while playing locally. No `npm install` is necessary.
+Open http://localhost:4173 in two separate browser profiles or tabs, create/join the same room, and mark ready. `npm start` remains a static-only preview for Solo and historical review pages; use `start:multiplayer` to test online rooms locally.
 
-## Tests
+## Hosting
+
+- Frontend: existing Render Static Site `badzone-run`, branch `main`, publish `public`.
+- Authority: one free Node Web Service `badzone-run-api`, branch `multiplayer-live`, start `node server/index.mjs`, binding `0.0.0.0:$PORT`.
+- Build gate: `npm test && npm run build` on both services.
+- API health: https://badzone-run-api.onrender.com/api/health.
+- Allowed production browser origin: https://badzone-run.onrender.com.
+
+The frontend uses the API origin above on the production hostname and same-origin APIs locally. A different hosting domain requires configuring both the client API URL and server allowed origins. The backend tracks a dedicated reviewed branch so presentation-only frontend deployments do not interrupt running rooms.
+
+Rooms are in memory: refreshing/reconnecting the same tab restores a seat while the server retains it; server restarts or redeploys clear active rooms. Rooms also expire after 24 hours idle. The free service's initial connection after idle may take a minute. Solo saves and upgrades remain browser-local and separate from Versus.
+
+## Tests and evidence
 
 ```sh
 npm test
 npm run build
+BADZONE_PLAYWRIGHT=/path/to/playwright node scripts/check-multiplayer.mjs
+BADZONE_PLAYWRIGHT=/path/to/playwright node scripts/check-polish.mjs
 ```
 
-The build validates native JavaScript modules and their local assets. There is no transpilation step. The authoritative game engine and persistence module are byte-identical to the integrated 0.1.0 candidate. Root mounting, branding links, base styling and deployment configuration are specific to this standalone distribution.
+For live tests set `BADZONE_URL=https://badzone-run.onrender.com` and `BADZONE_API=https://badzone-run-api.onrender.com`. Playwright is test tooling, not a runtime dependency.
 
-## Persistence
+See [multiplayer architecture](docs/VERSUS_MULTIPLAYER.md), [live verification](docs/MULTIPLAYER_LIVE_VERIFICATION.json), and [visual release review](docs/VERSUS_RELEASE_REVIEW.md). Historical mock/visual-slice documents record earlier stages; the production entry loads `badzone/online.js`.
 
-Progress lives in this browser's localStorage under `necronw.badzone.v1`. The existing localhost profile will not appear automatically on the Render domain. Daily loadouts ignore upgrades; the Daily changes at UTC midnight. Scores are local and unverified. If storage is unavailable, the UI explains that progress cannot survive closing the page.
-
-## Submission handoff
-
-- `SUBMISSION.md`: title, description and judge-facing instructions.
-- `DEPLOYMENT_STATUS.md`: executed checks, remaining gates and connection requirements.
-- `docs/BADZONE_RUN_RULES.md`: complete original digital rules.
-- `docs/TEST_RESULTS.txt` and `docs/BUILD_RESULTS.txt`: validation output.
-
-The package is prepared for deployment. A public Render URL and browser acceptance must be verified before submitting that URL to the contest. No contest submission has been sent and no specific contest eligibility requirements have been verified.
-
-Original digital rules and CSS/SVG visuals. Unofficial fan project; not affiliated with Games Workshop. Included display font licensing is provided in `public/assets/font-license.txt`.
+Original digital rules, SVG vehicles and environments. Four chassis rendered at NW/N/NE headings; six distinct hazard treatments. Independent fan project, not affiliated with Games Workshop. Display font license: `public/assets/font-license.txt`.

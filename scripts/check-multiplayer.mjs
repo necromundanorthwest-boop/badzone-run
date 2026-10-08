@@ -1,8 +1,8 @@
 import {createRequire} from 'node:module';import {mkdir,writeFile} from 'node:fs/promises';import {makeServer} from '../server/index.mjs';import {chooseAIAction} from '../public/badzone/engine.js';
 const require=createRequire(import.meta.url),{chromium}=require(process.env.BADZONE_PLAYWRIGHT||'playwright');
 const server=process.env.BADZONE_URL?null:makeServer({limit:100000});if(server)await new Promise(r=>server.listen(0,'127.0.0.1',r));
-const base=process.env.BADZONE_URL||'http://127.0.0.1:'+server.address().port;const api=process.env.BADZONE_API||base;const browser=await chromium.launch({headless:true,executablePath:process.env.BADZONE_CHROMIUM});
-const errors=[];const contexts=await Promise.all([browser.newContext(),browser.newContext()]);const pages=await Promise.all(contexts.map(c=>c.newPage()));for(const p of pages){p.on('pageerror',e=>errors.push(e.message));await p.goto(base);}
+const base=process.env.BADZONE_URL||'http://127.0.0.1:'+server.address().port;const api=process.env.BADZONE_API||base;const browser=await chromium.launch({headless:true,executablePath:process.env.BADZONE_CHROMIUM,...(process.env.BADZONE_URL&&process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{})});
+const errors=[];const contexts=await Promise.all([browser.newContext({ignoreHTTPSErrors:!!process.env.HTTPS_PROXY&&!!process.env.BADZONE_URL}),browser.newContext({ignoreHTTPSErrors:!!process.env.HTTPS_PROXY&&!!process.env.BADZONE_URL})]);const pages=await Promise.all(contexts.map(c=>c.newPage()));for(const p of pages){p.on('pageerror',e=>errors.push(e.message));await p.goto(base);}
 const [a,b]=pages;let count=0;
 async function seat(p){return p.evaluate(()=>JSON.parse(sessionStorage.getItem('badzone-room-v1')))}
 async function state(p){const s=await seat(p);return p.evaluate(async({s,api})=>{const r=await fetch(api+'/api/rooms/'+s.code,{headers:{Authorization:'Bearer '+s.token}});return r.json()},{s,api})}
