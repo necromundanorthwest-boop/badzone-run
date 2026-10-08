@@ -1,4 +1,4 @@
-# Standalone browser game. Static hosting; no running Node server or database.
+# Existing static URL plus a single authoritative multiplayer API.
 services:
   - type: web
     name: badzone-run
@@ -19,3 +19,16 @@ services:
       - path: /*
         name: Cache-Control
         value: no-cache
+  - type: web
+    name: badzone-run-api
+    runtime: node
+    plan: free
+    buildCommand: npm test && npm run build
+    startCommand: node server/index.mjs
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: "22.16.0"
+      - key: ALLOWED_ORIGINS
+        value: https://badzone-run.onrender.com

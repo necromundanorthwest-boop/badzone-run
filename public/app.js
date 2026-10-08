@@ -5,7 +5,7 @@ try {
     const {mountBadzone}=await import('./badzone/ui.js');
     mountBadzone(root);
   }else{
-    const {mountVersus}=await import('./badzone/versus-ui.js');
+    const {mountVersus}=await import('./badzone/online.js');
     mountVersus(root);
   }
 } catch (error) {

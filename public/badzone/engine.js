@@ -142,7 +142,10 @@ function finish(s,reason){s.status='done';const v=s.vehicles[0];const ordered=[.
  s.result={reason,completed,position,score,parts,hull:v.hull,maxHull:v.maxHull,...s.stats,reward:s.mode==='free'?Math.max(30,Math.floor(score/40)):0,share:`BADZONE ${s.seed} | v${VERSION} | ${completed?'P'+position:'WRECK / DNF'} | ${score} pts | ${s.stats.activations} acts | Hull ${v.hull}/${v.maxHull}`};event(s,'result',`${completed?'Race complete':'Run ended'}: ${score} points.`);
 }
 function endRound(s){
- if(s.vehicles[0].wrecked){finish(s,'Player wrecked');return}
+ if(s.mode==='versus'){
+  const humans=[s.vehicles[0],s.vehicles[2]];
+  if(humans.some(v=>v.wrecked)||s.section===2&&(humans.some(v=>v.exited)||s.sectionRound>=18)){finishVersus(s);return}
+ }else if(s.vehicles[0].wrecked){finish(s,'Player wrecked');return}
  const alive=s.vehicles.filter(v=>!v.wrecked),threshold=Math.ceil(alive.length/2);
  if(s.section===2&&s.vehicles[0].exited){finish(s,'Finish line reached');return}
  if(s.sectionRound>=18&&s.section===2){finish(s,'Race time limit');return}
@@ -174,7 +177,7 @@ export function resolveAction(state,action){
  if(active(v)&&s.track.hazard==='turrets'&&(v.x<=1||v.x>=6)){const die=roll(s);event(s,'hazard',`Turret targets ${v.name}: 4+, rolled ${die}.`);if(die>=4)damage(s,v,1,null,'turret');if(v.id===0&&!v.wrecked)s.stats.hazards++}
  if(active(v)&&s.track.blasts.some(b=>Math.max(Math.abs(v.x-b.x),Math.abs(v.y-b.y))<=1))damage(s,v,1,null,'lingering blast zone');
  if(active(v)&&v.fire){damage(s,v,1,null,'fire');v.fire--}
- if(s.vehicles[0].wrecked)finish(s,'Player wrecked');else nextTurn(s);return s;
+ if(s.mode==='versus'&&[0,2].some(id=>s.vehicles[id].wrecked))finishVersus(s);else if(s.mode!=='versus'&&s.vehicles[0].wrecked)finish(s,'Player wrecked');else nextTurn(s);return s;
 }
 export function chooseAIAction(s,id=s.turn){
  const actions=getLegalActions(s,id),v=s.vehicles[id];if(!actions.length)return null;
@@ -192,3 +195,20 @@ export function chooseAIAction(s,id=s.turn){
  return {a,value:value+random()*0.15};}).sort((a,b)=>b.value-a.value)[0].a;
 }
 export function advanceAI(state){let s=state;for(let n=0;n<200&&s.status==='racing'&&s.turn!==0;n++)s=resolveAction(s,chooseAIAction(s));if(s.status==='racing'&&s.turn!==0)throw Error('AI turn safeguard');return s}
+
+// Versus adds only symmetric human ownership and victory. Solo remains unchanged.
+export function createVersusRace(seed,p1,p2){
+ const s=createRace(seed,p1);s.mode='versus';
+ for(const [id,type] of [[0,p1],[2,p2]]){
+  if(!Object.hasOwn(RACERS,type))throw Error('Invalid chassis');
+  Object.assign(s.vehicles[id],RACERS[type],{type,name:`P${id===0?1:2} / ${RACERS[type].name}`,maxHull:RACERS[type].hull,upgrade:null});
+ }
+ return s;
+}
+function finishVersus(s){
+ s.status='done';const a=s.vehicles[0],b=s.vehicles[2];
+ const order=[...s.exits.map(e=>e.id),...s.vehicles.filter(v=>!v.exited).sort((a,b)=>Number(a.wrecked)-Number(b.wrecked)||a.y-b.y||a.id-b.id).map(v=>v.id)];
+ const winner=a.wrecked&&b.wrecked?null:a.wrecked?2:b.wrecked?0:order.indexOf(0)<order.indexOf(2)?0:2;
+ s.result={winner,order,reason:a.wrecked||b.wrecked?'Human racer wrecked':s.sectionRound>=18?'Race time limit':'Final section finish'};
+ event(s,'result',winner===null?'Both drivers wrecked: draw.':`P${winner===0?1:2} wins. ${s.result.reason}.`);
+}
