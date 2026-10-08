@@ -25,3 +25,7 @@ Evidence scripts: `scripts/check-polish.mjs`, `scripts/check-multiplayer.mjs`. S
 ## Limits
 
 The race remains a scrolling interface, particularly on phones; an in-page turn shortcut reaches controls. Small peripheral board row numbers supplement larger text positions. Free-server wake-up and room-reset limits are documented in the UI and submission instructions. No claim of durable online saves, high availability, human aesthetic approval, exhaustive screen-reader coverage, or performance benchmarking. Earlier mock and slice documents remain historical records.
+
+## Final deployed acceptance
+
+Visual code commit `fd7531ab9a2dab3023e4c0cd219141c8047b7f63` deployed live as `dep-db412tss728c73fhutag`. A subsequent Chrome check at the public URL created a room, joined P2 in another tab, readied both, confirmed P1's real action, and observed synchronized positions plus P2's enabled controls. Screenshot: `polish-evidence/live-chrome.jpg`. Evidence-only commits after the visual deployment do not change production application bytes. The authority remains on `3981c07`.
