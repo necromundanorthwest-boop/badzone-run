@@ -1,0 +1,49 @@
+{
+  "browser": "134.0.6998.35",
+  "checks": [
+    {
+      "width": 320,
+      "height": 844,
+      "overflow": false,
+      "consoleErrors": [],
+      "keyboardConfirm": "pass",
+      "engineShot": "pass",
+      "turnSamples": "pass",
+      "alternativeManeuver": "pass",
+      "reducedMotion": "pass"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "consoleErrors": [],
+      "keyboardConfirm": "pass",
+      "engineShot": "pass",
+      "turnSamples": "pass",
+      "alternativeManeuver": "pass",
+      "reducedMotion": "pass"
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "consoleErrors": [],
+      "keyboardConfirm": "pass",
+      "engineShot": "pass",
+      "turnSamples": "pass",
+      "alternativeManeuver": "pass",
+      "reducedMotion": "pass"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "consoleErrors": [],
+      "keyboardConfirm": "pass",
+      "engineShot": "pass",
+      "turnSamples": "pass",
+      "alternativeManeuver": "pass",
+      "reducedMotion": "pass"
+    }
+  ]
+}
